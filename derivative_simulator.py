@@ -1,6 +1,6 @@
 import streamlit as st
 
-# ====================== INFINITE DRIVE STYLING ======================
+# ====================== INFINITE DRIVE STYLING - FIXED READABILITY ======================
 st.set_page_config(page_title="Derivative Power Simulator", page_icon="🛡️", layout="centered")
 
 st.markdown("""
@@ -12,7 +12,7 @@ st.markdown("""
     .title {
         font-family: 'Courier New', monospace;
         color: #ffd700;
-        text-shadow: 0 0 15px #ffaa00, 0 0 30px #ff5500;
+        text-shadow: 0 0 20px #ffaa00, 0 0 35px #ff5500;
         font-weight: bold;
         letter-spacing: 4px;
         font-size: 3.0em;
@@ -20,9 +20,9 @@ st.markdown("""
     }
     .subtitle {
         color: #00ff9d;
-        font-size: 1.25em;
-        text-shadow: 0 0 10px #00ff9d;
-        margin-bottom: 25px;
+        font-size: 1.3em;
+        text-shadow: 0 0 12px #00ff9d;
+        margin-bottom: 30px;
     }
     .stMetric label {
         color: #ffd700 !important;
@@ -31,27 +31,35 @@ st.markdown("""
     }
     .stMetric div[data-testid="stMetricValue"] {
         color: #ffffff !important;
-        font-size: 1.9em;
-        text-shadow: 0 0 12px #00ff9d;
+        font-size: 1.95em;
+        text-shadow: 0 0 15px #00ff9d;
     }
     .result-box {
-        background: rgba(255, 215, 0, 0.12);
+        background: rgba(255, 215, 0, 0.15);
         border: 2px solid #ffd700;
         border-radius: 12px;
-        padding: 20px;
-        color: #00ff9d;
+        padding: 25px;
+        color: #ffffff;
         font-weight: bold;
         text-align: center;
-        text-shadow: 0 0 10px #ffaa00;
+        text-shadow: 0 0 10px #00ff9d;
+        margin: 15px 0;
     }
     .header-logo {
         text-align: center;
         margin: 15px 0 10px 0;
     }
+    /* Fix input labels and sliders */
+    .stNumberInput label, .stSlider label {
+        color: #ffd700 !important;
+    }
+    .stSlider .stMarkdown {
+        color: #00ff9d !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# FundDog Logo Header - Half Size
+# FundDog Logo Header
 st.markdown('<div class="header-logo">', unsafe_allow_html=True)
 st.image("funddog_logo.jpg", width=240)
 st.markdown('</div>', unsafe_allow_html=True)
@@ -70,20 +78,19 @@ st.subheader("Scenario: $QOM Price Pump")
 qom_multiplier = st.slider("How much does $QOM pump?", min_value=1.0, max_value=50.0, value=5.0, step=0.5)
 
 new_qom_price = current_qom_price * qom_multiplier
-
-# Simple derivative model: FUNDOG gains ~60-80% of QOM's % move (tuned to feel reflexive but realistic)
-fundog_multiplier = 1 + (qom_multiplier - 1) * 0.72   # 72% beta to QOM movement
+fundog_multiplier = 1 + (qom_multiplier - 1) * 0.72   # Derivative beta
 
 new_fundog_value = current_fundog * fundog_multiplier
+gain_percent = (fundog_multiplier - 1) * 100
 
 st.markdown('<div class="result-box">', unsafe_allow_html=True)
 st.write(f"**If $QOM pumps {qom_multiplier:.1f}x**")
 st.metric("New $QOM Price", f"${new_qom_price:.6f}")
 st.metric("Your $FUNDOG Value", f"{new_fundog_value:,.0f} $FUNDOG")
-st.metric("Gain from Derivative Power", f"+{ (fundog_multiplier-1)*100 :.1f}%", delta=f"{new_fundog_value - current_fundog:,.0f}")
+st.metric("Gain from Derivative Power", f"+{gain_percent:.1f}%", delta=f"{new_fundog_value - current_fundog:,.0f}")
 st.markdown('</div>', unsafe_allow_html=True)
 
-st.caption("This is a simulation based on historical derivative meme behavior on Layer 1 chains.\n"
+st.caption("This is a simulation based on typical derivative meme behavior on Layer 1 chains.\n"
            "The Guardian watches the base chain so the Pack can benefit reflexively.")
 
 st.caption("For teh people. By teh people. Protected by teh Dog. 🦮")
