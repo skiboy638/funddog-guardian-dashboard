@@ -28,4 +28,34 @@ st.markdown('<p class="subtitle">When $QOM moves → the Pack feels it. No extra
 st.markdown("""
 <div class="explanation">
 <strong>Why $FUNDOG pumps when $QOM moves (even with no buys):</strong><br><br>
-$FUNDOG is paired
+$FUNDOG is paired with $QOM in the liquidity pool. When $QOM inflows increase (bridge, farming, etc.), 
+the pool grows and $FUNDOG — being the smaller side — moves harder. This creates automatic reflexive upside for $FUNDOG holders.
+</div>
+""", unsafe_allow_html=True)
+
+# ====================== SIMULATOR ======================
+st.subheader("Your Current Position")
+current_fundog = st.number_input("Your $FUNDOG holdings", min_value=0.0, value=1000000.0, step=10000.0, format="%.0f")
+current_qom_price = st.number_input("Current $QOM price (in USD)", min_value=0.0000000001, value=0.0008000000, format="%.10f", step=0.0000000001)
+
+st.markdown("---")
+st.subheader("Scenario: $QOM Price Pump")
+
+qom_multiplier = st.slider("How much does $QOM pump?", min_value=1.0, max_value=50.0, value=5.0, step=0.5)
+
+new_qom_price = current_qom_price * qom_multiplier
+fundog_multiplier = 1 + (qom_multiplier - 1) * 0.72
+
+new_fundog_value = current_fundog * fundog_multiplier
+gain_percent = (fundog_multiplier - 1) * 100
+
+st.markdown('<div class="result-box">', unsafe_allow_html=True)
+st.write(f"**If $QOM pumps {qom_multiplier:.1f}x**")
+st.metric("New $QOM Price", f"${new_qom_price:.10f}")
+st.metric("Your $FUNDOG Value", f"{new_fundog_value:,.0f} $FUNDOG")
+st.metric("Gain from Derivative Power", f"+{gain_percent:.1f}%", delta=f"{new_fundog_value - current_fundog:,.0f}")
+st.markdown('</div>', unsafe_allow_html=True)
+
+st.caption("Simulation based on typical Layer 1 derivative behavior • The Guardian watches the base chain.")
+
+st.caption("For teh people. By teh people. Protected by teh Dog. 🦮")
