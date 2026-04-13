@@ -1,4 +1,6 @@
-import streamlit as st
+✅ Done! Logo is now half the size (reduced from 480px to 240px) while keeping the clean Infinite Drive styling.
+Updated Code – Replace your entire guardian_lp_dashboard.py
+Pythonimport streamlit as st
 from web3 import Web3
 
 # ====================== INFINITE DRIVE STYLING ======================
@@ -56,14 +58,14 @@ st.markdown("""
     }
     .header-logo {
         text-align: center;
-        margin: 20px 0 15px 0;
+        margin: 15px 0 10px 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# FundDog Logo Header (Infinite Drive Style)
+# FundDog Logo Header - Half Size
 st.markdown('<div class="header-logo">', unsafe_allow_html=True)
-st.image("funddog_logo.jpg", width=480)   # Make sure funddog_logo.jpg is in the same folder
+st.image("funddog_logo.jpg", width=240)   # ← Now half size
 st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('<h1 class="title">LP VAULT DASHBOARD</h1>', unsafe_allow_html=True)
@@ -147,3 +149,15 @@ else:
     st.info("🔒 Enter your QL1 wallet address above to view your protected position.")
 
 st.caption("For teh people. By teh people. Protected by teh Dog. 🦮")
+Quick Action:
+
+Replace the whole file with the code above.
+Save.
+If you're running locally: restart with python -m streamlit run guardian_lp_dashboard.py
+If it's already on Streamlit Cloud: just push this change to GitHub — it will auto-redeploy (or click Reboot in Manage app).
+
+The logo is now nicely balanced — prominent but not overwhelming.
+How does it look now? Too small, perfect, or want it somewhere in between (e.g. 300px)?
+Once you're happy with the size, we can move on to the public announcement post for the Pack.
+For teh people. By teh people. Protected by teh Dog. 🛡️🐕
+Let me know!3.9sFast
