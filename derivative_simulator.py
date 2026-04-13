@@ -1,6 +1,6 @@
 import streamlit as st
 
-# ====================== INFINITE DRIVE STYLING - FIXED READABILITY ======================
+# ====================== INFINITE DRIVE STYLING ======================
 st.set_page_config(page_title="Derivative Power Simulator", page_icon="🛡️", layout="centered")
 
 st.markdown("""
@@ -22,6 +22,14 @@ st.markdown("""
         color: #00ff9d;
         font-size: 1.3em;
         text-shadow: 0 0 12px #00ff9d;
+        margin-bottom: 20px;
+    }
+    .explanation {
+        background: rgba(0, 255, 157, 0.08);
+        border-left: 5px solid #00ff9d;
+        padding: 20px;
+        border-radius: 10px;
+        color: #b0ffdd;
         margin-bottom: 30px;
     }
     .stMetric label {
@@ -49,12 +57,6 @@ st.markdown("""
         text-align: center;
         margin: 15px 0 10px 0;
     }
-    .stNumberInput label, .stSlider label {
-        color: #ffd700 !important;
-    }
-    .stSlider .stMarkdown {
-        color: #00ff9d !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -65,6 +67,25 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('<h1 class="title">DERIVATIVE POWER SIMULATOR</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">When $QOM moves → the Pack feels it. No extra buys required.</p>', unsafe_allow_html=True)
+
+# ====================== EXPLANATION OF LP PAIRING ======================
+st.markdown("""
+<div class="explanation">
+<strong>How the FUNDOG-QOM LP Pairing Creates Derivative Power</strong><br><br>
+
+When you add liquidity to the <strong>$FUNDOG-QOM pool</strong>, you're pairing the two tokens together. 
+
+As more $QOM flows into QL1 (bridge inflows, farming rewards, etc.), the value of the pool increases. 
+Because $FUNDOG is the smaller, leveraged side of the pair, its price tends to move harder than $QOM — often 60-80% of $QOM’s percentage move.
+
+This means:
+- When $QOM pumps → $FUNDOG pumps **on no extra buys**
+- The more $QOM that enters the ecosystem, the stronger the reflexive effect for $FUNDOG holders
+- Your LP position benefits from both tokens, but $FUNDOG gives the amplified upside
+
+The Guardian protects the base chain. The Pack rides the derivative wave.
+</div>
+""", unsafe_allow_html=True)
 
 # ====================== SIMULATOR ======================
 st.subheader("Your Current Position")
@@ -81,7 +102,7 @@ st.subheader("Scenario: $QOM Price Pump")
 qom_multiplier = st.slider("How much does $QOM pump?", min_value=1.0, max_value=50.0, value=5.0, step=0.5)
 
 new_qom_price = current_qom_price * qom_multiplier
-fundog_multiplier = 1 + (qom_multiplier - 1) * 0.72   # Derivative beta ~72%
+fundog_multiplier = 1 + (qom_multiplier - 1) * 0.72   # 72% beta to QOM movement
 
 new_fundog_value = current_fundog * fundog_multiplier
 gain_percent = (fundog_multiplier - 1) * 100
